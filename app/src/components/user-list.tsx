@@ -18,7 +18,12 @@ export default function UserList() {
     setLoading(true)
     try {
       const skip = (page - 1) * USERS_PER_PAGE
-      const res = await fetch(`https://dummyjson.com/users?limit=${USERS_PER_PAGE}&skip=${skip}`)
+      const res = await fetch(`/api/users?page=${page}`)
+
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status}`)
+      }
+
       const data = await res.json()
       console.log("API Response:", data)
       setUsers(data.users)
@@ -29,6 +34,7 @@ export default function UserList() {
       setLoading(false)
     }
   }
+
 
   useEffect(() => {
     fetchUsers(currentPage)
