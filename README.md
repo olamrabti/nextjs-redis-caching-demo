@@ -60,7 +60,7 @@ make up
     ![Alt Text](/app/public/before_redis.png)
 
     after caching:
-    ![Alt Text](/app/public/with_redis.png)
+    ![Alt Text](/app/public/redis.png)
 
 
 

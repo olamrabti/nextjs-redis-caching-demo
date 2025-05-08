@@ -1,4 +1,3 @@
-
 services:
   app:
     build:
@@ -12,11 +11,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_URL=redis://redis:6379
-    # can be removed after finishing the dev
-    volumes:
-      - ./app:/app
-    command: npm run dev
-
+   
   redis:
     image: redis:7-alpine
     container_name: redis
