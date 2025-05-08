@@ -56,11 +56,15 @@ make up
 
     For the user list (CSR) : Redis caching reduces response latency by ~200ms for repeated requests.
     
-    before caching
+    before caching:
+  
     ![Alt Text](/app/public/before_redis.png)
 
     after caching:
+  
     ![Alt Text](/app/public/redis.png)
+
+  We can clearly observe that cached pages are rendered significantly faster after the initial API call, as Redis serves the data instantly on subsequent requests eliminating network delays and reducing page load time
 
 
 
@@ -73,6 +77,7 @@ Right now, I only fetch and cache one page at a time when a user clicks. To make
 - Or even better: when I fetch page 1, I could also store pages 2 and 3 in Redis right away, if the API allows it.
 
     This way, the user doesn’t wait when clicking "Next".
+- To support higher traffic and growing datasets, this prototype can be scaled horizontally by containerizing the app and deploying multiple instances behind a load balancer like NGINX. Additionally, splitting responsibilities into microservices (in case of more than one service) can improve maintainability and scaling. 
 
 
 
