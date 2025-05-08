@@ -64,6 +64,8 @@ make up
   
     ![Alt Text](/app/public/with_redis.png)
 
+  We can clearly observe that cached pages are rendered significantly faster after the initial API call, as Redis serves the data instantly on subsequent requests eliminating network delays and reducing page load time
+
 
 
 ## Scaling Strategy
