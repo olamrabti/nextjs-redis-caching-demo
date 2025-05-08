@@ -56,10 +56,12 @@ make up
 
     For the user list (CSR) : Redis caching reduces response latency by ~200ms for repeated requests.
     
-    before caching
+    before caching:
+  
     ![Alt Text](/app/public/before_redis.png)
 
     after caching:
+  
     ![Alt Text](/app/public/with_redis.png)
 
 
