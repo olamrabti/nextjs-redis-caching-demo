@@ -1,10 +1,13 @@
-import UserList from "@/components/user-list"
+import UserList from "@/components/userList"
+import Hero from "@/components/Hero"
 
 export default function Home() {
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="ml-8 text-3xl font-bold mb-6">Clients : </h1>
-      <UserList />
+      <div className="space-y-10">
+        <Hero />
+        <UserList />
+      </div>
     </main>
   )
 }

@@ -1,5 +1,6 @@
+# the cd part can be removed after developement 
 up:
-	docker-compose up --build
+	cd app && npm i && cd .. && docker-compose up --build
 
 down:
 	docker-compose down

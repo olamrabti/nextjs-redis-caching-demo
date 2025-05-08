@@ -1,23 +1,29 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import UserCard from "./user-card"
-import Pagination from "./pagination"
+import { useCallback, useEffect, useState } from "react"
+import UserCard from "./userCard"
+import Pagination from "./Pagination"
 
+type User = {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+}
 
 const USERS_PER_PAGE = 6
 
 export default function UserList() {
+
   const [currentPage, setCurrentPage] = useState(1)
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<User[]>([])
   const [totalPages, setTotalPages] = useState(1)
   const [loading, setLoading] = useState(false)
 
 
-  const fetchUsers = async (page: number) => {
+  const fetchUsers = useCallback(async (page: number) => {
     setLoading(true)
     try {
-      const skip = (page - 1) * USERS_PER_PAGE
       const res = await fetch(`/api/users?page=${page}`)
 
       if (!res.ok) {
@@ -33,12 +39,14 @@ export default function UserList() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-
+  // When `currentPage` changes, fetch the corresponding user data.
+  // The fetchUsers function is memoized using useCallback to ensure stable identity
+  // and prevent unnecessary effect re-runs.
   useEffect(() => {
     fetchUsers(currentPage)
-  }, [currentPage])
+  }, [currentPage, fetchUsers])
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
@@ -46,31 +54,25 @@ export default function UserList() {
   return (
     <div className="space-y-6">
       {loading ? (
-        <p>Loading...</p>
+        <div style={{ fontSize: "20px", fontWeight: "bold", textAlign: "center" }}>
+          Loading...
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {users.length > 0 ? (
+            {
               users.map((user: any) => (
                 <UserCard
                   key={user.id}
-                  user={{
-                    id: user.id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                  }}
+                  user={user}
                 />
               ))
-            ) : (
-              <p>No users found.</p>
-            )}
+            }
 
           </div>
-
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </>
       )}
-    </div>
+    </div >
   )
 }
